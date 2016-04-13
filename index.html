@@ -26,12 +26,34 @@
     //   circle1 = new Path.Circle(new Point(x, y), 10).fillColor = 'purple';
     //   }
     // }
+
+    // keep track of circles in array, so that we can apply frame function
+    var circles = [];
+
+    // when hit key generate circles at random points
     function onKeyDown(event) {
+      // generate circles at random point only within view of screen size
       var maxPoint = new Point(view.size.width, view.size.height);
       console.log(maxPoint);
       var randomPoint = Point.random();
       var point = maxPoint * randomPoint;
-      new Path.Circle(point, 10).fillColor = "orange";
+      // create new circle and pass random point to define x, y. 10 is radius.
+      var newCircle = new Path.Circle(point, 500);
+      // give each circle a fillColor
+      newCircle.fillColor = "orange";
+      // push newCircle into circles array to apply frame function
+      circles.push(newCircle);
+
+      // doesn't work because only pushes fillColor into array since it's the last thing defined. Refractor is above.
+      // circles.push(new Path.Circle(point, 10).fillColor = "orange");
+    }
+
+// loop through array of all circles and change hue and scale
+    function onFrame(event) {
+      for(var i = 0; i < circles.length; i++) {
+        circles[i].fillColor.hue += 1;
+        circles[i].scale(.92);
+      }
     }
 
   </script>
